@@ -11,7 +11,7 @@ export class AppController {
     const res = await this.appService.getAccessToken(appid, secret)
     return res
   }
-
+  
   @Get('/access_token')
   async getAccessToken(@Query() query): Promise<any> {
     const { appid, secret } = query
