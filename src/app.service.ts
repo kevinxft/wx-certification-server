@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { Injectable, HttpService } from '@nestjs/common'
 
-let cache = {}
-let ticketCache = {}
+const cache = {}
+const ticketCache = {}
 
 @Injectable()
 export class AppService {

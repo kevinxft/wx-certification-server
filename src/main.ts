@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('wx-certification-api')
+  app.setGlobalPrefix('wx')
   app.enableCors() 
   await app.listen(4000);
 }

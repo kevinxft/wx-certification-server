@@ -1,7 +1,7 @@
 import { Controller, Post, Get, Query, Body } from '@nestjs/common'
 import { AppService } from './app.service'
 
-@Controller()
+@Controller('cert')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
@@ -21,15 +21,15 @@ export class AppController {
 
   @Get('/ticket')
   async getTicket(@Query() query): Promise<any> {
-    const { access_token } = query
-    const res = await this.appService.getTicket(access_token)
+    const { accessToken } = query
+    const res = await this.appService.getTicket(accessToken)
     return res
   }
 
   @Post('/ticket')
   async getTicketPost(@Body() body): Promise<any> {
-    const { access_token } = body
-    const res = await this.appService.getTicket(access_token)
+    const { accessToken } = body
+    const res = await this.appService.getTicket(accessToken)
     return res
   }
 
