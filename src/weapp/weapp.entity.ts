@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate } from 'typeorm'
 
-@Entity()
+@Entity('weapp')
 export class WeappEntity {
   @PrimaryGeneratedColumn()
   _id: number
@@ -13,6 +13,9 @@ export class WeappEntity {
 
   @Column()
   secret: string
+
+  @Column()
+  desc: string
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created: Date
