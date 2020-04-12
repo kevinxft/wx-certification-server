@@ -1,30 +1,35 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate } from 'typeorm'
+import {
+  Entity,
+  Index,
+  Column,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  CreateDateColumn,
+  BeforeUpdate,
+} from 'typeorm'
 
 @Entity('weapp')
 export class WeappEntity {
   @PrimaryGeneratedColumn()
-  _id: number
+  id: number
 
   @Column()
   name: string
 
   @Column()
+  @Index({ unique: true })
   appid: string
 
+  // TODO: 加密保存
   @Column()
   secret: string
 
-  @Column()
+  @Column({ default: '' })
   desc: string
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn()
   created: Date
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @UpdateDateColumn()
   updated: Date
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updated = new Date()
-  }
 }

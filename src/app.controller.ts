@@ -1,4 +1,12 @@
-import { Controller, Post, Get, Query, Body } from '@nestjs/common'
+import {
+  Controller,
+  Post,
+  Get,
+  Query,
+  Body,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common'
 import { AppService } from './app.service'
 
 @Controller('cert')
@@ -11,7 +19,7 @@ export class AppController {
     const res = await this.appService.getAccessToken(appid, secret)
     return res
   }
-  
+
   @Get('/access_token')
   async getAccessToken(@Query() query): Promise<any> {
     const { appid, secret } = query
@@ -35,15 +43,35 @@ export class AppController {
 
   @Get('/ticket_direct')
   async getTickDirect(@Query() query): Promise<any> {
-    const { appid, secret } = query
-    const res = await this.appService.getTicketDirect(appid, secret)
-    return res
+    const { appid } = query
+    const res = await this.appService.getTicketDirect(appid)
+    console.log('res', res)
+    if (res) {
+      return res
+    }
+    throw new HttpException(
+      {
+        status: HttpStatus.BAD_REQUEST,
+        message: 'appid未在本系统内注册',
+      },
+      400,
+    )
   }
 
   @Post('/ticket_direct')
   async getTickDirectPost(@Body() body): Promise<any> {
-    const { appid, secret } = body
-    const res = await this.appService.getTicketDirect(appid, secret)
-    return res
+    const { appid } = body
+    const res = await this.appService.getTicketDirect(appid)
+    console.log('res', res)
+    if (res) {
+      return res
+    }
+    throw new HttpException(
+      {
+        status: HttpStatus.BAD_REQUEST,
+        message: 'appid未在本系统内注册',
+      },
+      400,
+    )
   }
 }

@@ -8,5 +8,6 @@ import { WeappEntity } from './weapp.entity'
   imports: [TypeOrmModule.forFeature([WeappEntity])],
   providers: [WeappService],
   controllers: [WeappController],
+  exports: [WeappService]
 })
 export class WeappModule {}

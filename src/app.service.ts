@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Injectable, HttpService } from '@nestjs/common'
-
+import { WeappService } from './weapp/weapp.service'
 const cache = {}
 const ticketCache = {}
 
 @Injectable()
 export class AppService {
-  constructor(private readonly http: HttpService) {}
+  constructor(
+    private readonly http: HttpService,
+    private readonly weappService: WeappService,
+  ) {}
 
   async refreshToken(appid: string, secret: string): Promise<any> {
     const { data } = await this.http
@@ -75,9 +78,13 @@ export class AppService {
     }
   }
 
-  async getTicketDirect(appid: string, secret: string): Promise<any> {
-    const { access_token } = await this.getAccessToken(appid, secret)
-    const data = await this.getTicket(access_token)
-    return data
+  async getTicketDirect(appid: string): Promise<any> {
+    const weapp = await this.weappService.findOne(appid)
+    if (weapp) {
+      const { access_token } = await this.getAccessToken(appid, weapp.secret)
+      const data = await this.getTicket(access_token)
+      return data
+    }
+    return null
   }
 }
